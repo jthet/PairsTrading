@@ -18,6 +18,7 @@ class LogisticStrategy(BaseBacktest):
     
     Command Line Args:
         --no-plot: Disable plotting of portfolio performance.
+        --pairs-file: Path to the pairs file (default: data/cointegrated_pairs.csv).
         --help: Show this help message and exit.
     """
   
@@ -149,10 +150,12 @@ class LogisticStrategy(BaseBacktest):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run Logistic Regression Strategy Backtest with optional plotting.")
     parser.add_argument("--no-plot", action="store_true", help="Disable plotting of portfolio performance.")
+    parser.add_argument("--pairs-file", type=str, default="data/cointegrated_pairs.csv",
+                        help="Path to the pairs file (default: data/cointegrated_pairs.csv)")
     args = parser.parse_args()
     
     try:
-        pairs_df = pd.read_csv("data/cointegrated_pairs.csv")
+        pairs_df = pd.read_csv(args.pairs_file)
         test_data = pd.read_csv("data/russel_data_test.csv", index_col=0, parse_dates=True)
         full_data = pd.read_csv("data/russel_data_full.csv", index_col=0, parse_dates=True)
     except Exception as e:

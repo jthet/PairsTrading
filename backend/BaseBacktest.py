@@ -18,6 +18,7 @@ class BaseBacktest:
             
         Command Line Args:
           --no-plot: Disable plotting of portfolio performance.
+          --pairs-file: Path to the pairs file (default: data/cointegrated_pairs.csv).
           --help: Show this help message and exit.
         """
         self.pairs_df = pairs_df.copy()
@@ -28,7 +29,7 @@ class BaseBacktest:
         self.portfolio_returns = None
         self.portfolio_capital = None
         
-        # Use quality scores for weighting if provided... don't require it incase we give dif pairs without a quality score
+        # Use quality scores for weighting if provided... 
         if "Quality_Score" in self.pairs_df.columns:
             self.pairs_df["Scaled_Quality"] = self.pairs_df["Quality_Score"] / self.pairs_df["Quality_Score"].sum()
         else:
@@ -117,18 +118,19 @@ class BaseBacktest:
             first_pair_key = list(self.pair_results.keys())[0]
             self.pair_results[first_pair_key].to_csv(filename)
             print(f"Results for pair {first_pair_key} saved to {filename}.")
-        
         else:
             print("No results to save.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run BaseBacktest with optional plotting.")
     parser.add_argument("--no-plot", action="store_true", help="Disable plotting of portfolio performance.")
+    parser.add_argument("--pairs-file", type=str, default="data/cointegrated_pairs.csv",
+                        help="Path to the pairs file (default: data/cointegrated_pairs.csv)")
     args = parser.parse_args()
     
     try:
         test_data = pd.read_csv("data/russel_data_test.csv", index_col=0, parse_dates=True)
-        pairs_df = pd.read_csv("data/cointegrated_pairs.csv")
+        pairs_df = pd.read_csv(args.pairs_file)
         full_data = pd.read_csv("data/russel_data_full.csv", index_col=0, parse_dates=True)
     except Exception as e:
         print("Error loading data:", e)
