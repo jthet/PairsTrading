@@ -1,3 +1,12 @@
+import sys
+import os
+
+project_root = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(project_root)
+
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
