@@ -4,6 +4,15 @@ STAT 686: Market Models final project
 
 Jackson Thetford, Ryker Dolese, Krish Kumar, Katharine Britt, Naomi Consiglio Mehrdad Tamiji
 
+## Usage
+
+To run the application, run:
+
+```
+streamlit run frontend/Home.py
+```
+
+# Documentation
 ## PairsFinder Class
 
 ### Overview

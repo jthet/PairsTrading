@@ -8,7 +8,7 @@ import argparse
 import sys
 warnings.filterwarnings("ignore", category=UserWarning, module='xgboost')
 
-from BaseBacktest import BaseBacktest
+from backend.BaseBacktest import BaseBacktest
 
 class XGBoostStrategy(BaseBacktest):
     """

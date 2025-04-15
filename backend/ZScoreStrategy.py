@@ -1,8 +1,9 @@
-from BaseBacktest import BaseBacktest
 import numpy as np
 import pandas as pd
 import warnings
 import argparse
+
+from backend.BaseBacktest import BaseBacktest
 
 warnings.filterwarnings("ignore")
 

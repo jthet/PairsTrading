@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 
-from BaseBacktest import BaseBacktest
+from backend.BaseBacktest import BaseBacktest
 import argparse
 
 class LogisticStrategy(BaseBacktest):
