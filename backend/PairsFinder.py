@@ -228,15 +228,16 @@ class PairsFinder():
             self.logger.info(f"Cluster {cluster_id} ({len(cluster_assets)} assets): Found {len(cointegrated_pairs)} valid pairs so far.")
         if cointegrated_pairs:
             self.pairs_df = pd.DataFrame(cointegrated_pairs)
+            ## adding a clip (0.05, 0.95) to avoid zero weight for certain pairs or too high weight
             self.pairs_df['P-Value_adj'] = (
                 (self.pairs_df['P-Value'] - self.pairs_df['P-Value'].min()) /
                 (self.pairs_df['P-Value'].max() - self.pairs_df['P-Value'].min() + 1e-8)
             )
             self.pairs_df['Hurst_adj'] = (
-                (self.pairs_df['Hurst'] - self.pairs_df['Hurst'].min()) /
+                (self.pairs_df['Hurst'] - self.pairs_df['Hurst'].min() + 0.05) /
                 (self.pairs_df['Hurst'].max() - self.pairs_df['Hurst'].min() + 1e-8)
             )
-            self.pairs_df['Quality_Score'] = (1 - self.pairs_df['P-Value_adj']) * (1 - self.pairs_df['Hurst_adj'])
+            self.pairs_df['Quality_Score'] = (1 - self.pairs_df['P-Value_adj']) * (1 - self.pairs_df['Hurst_adj']).clip(lower=0.05, upper=0.95)
             self.pairs_df.sort_values('Quality_Score', ascending=False, inplace=True)
             self.pairs_df.reset_index(drop=True, inplace=True)
             self.logger.info("Cointegrated pairs found and quality scored.")
