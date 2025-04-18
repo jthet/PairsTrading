@@ -1,0 +1,3 @@
+[server]
+# don’t watch your Python files for changes
+fileWatcherType = "none"

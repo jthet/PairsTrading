@@ -121,11 +121,15 @@ if run_backtest:
 
     #  results
     if hasattr(strat, "portfolio_capital"):
+                    
         port = strat.portfolio_capital
-        final_ret = port.iloc[-1] / port.iloc[0] - 1
-        c1, c2 = st.columns(2)
+        final_ret = strat.final_return
+        c1, c2, c3, c4 = st.columns(4)
         c1.metric("Start Value", f"${port.iloc[0]*100:.2f}")
         c2.metric("Final Return", f"{final_ret:.2%}")
+        c3.metric("Annualized Sharpe", f"{strat.sharpe:.2f}")
+        c4.metric("Max Drawdown", f"{strat.drawdown:.2%}")
+        print("here")
 
         # performance chart
         perf_fig = px.line(

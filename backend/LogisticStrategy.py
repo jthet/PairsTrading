@@ -143,6 +143,10 @@ class LogisticStrategy(BaseBacktest):
             print(f"Annualized Sharpe: {sharpe:.2f}")
             print(f"Max Drawdown: {drawdown:.2%}")
             self.plot_portfolio_performance(title="Pairs Trading Performance (Logistic Regression Strategy)")
+            
+            self.drawdown = drawdown
+            self.sharpe = sharpe
+            self.final_return = self.portfolio_capital.iloc[-1] - 1
         else:
             print("No valid pairs processed for the Logistic Regression strategy.")
             

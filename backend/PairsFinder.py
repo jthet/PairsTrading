@@ -11,7 +11,6 @@ import torch.optim as optim
 from statsmodels.tsa.stattools import coint
 from hurst import compute_Hc
 
-
 class PairsFinder():
     class Autoencoder(nn.Module):
         def __init__(self, input_dim: int, encoding_dim: int = 5, hidden_dim: int = 64):
