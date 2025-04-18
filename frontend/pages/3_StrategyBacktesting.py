@@ -131,6 +131,16 @@ if run_backtest:
         c4.metric("Max Drawdown", f"{strat.drawdown:.2%}")
         print("here")
 
+    if hasattr(strat, "pair_results"):
+        pair_res = strat.pair_results
+        pair_res_end = {key: df.iloc[[-1]] for key, df in pair_res.items()}  # Get last row of each DF
+        final_df = pd.concat(pair_res_end.values(), keys=pair_res_end.keys())
+        print(final_df)
+        final_df = final_df.loc[:, ['capital']]
+        final_df.rename(columns={'capital': 'final capital (unscaled)'}, inplace=True)
+
+        
+
         # performance chart
         perf_fig = px.line(
             port,
@@ -141,5 +151,15 @@ if run_backtest:
         )
         perf_fig.update_layout(margin=dict(l=40, r=40, t=50, b=40))
         st.plotly_chart(perf_fig, use_container_width=True)
+
+        st.subheader("Pairs Results")
+    if hasattr(strat, "quality_weight"):
+        final_df['quality_weight'] = strat.quality_weight
+        final_df['starting capital'] = port.iloc[0] * 100 * final_df['quality_weight']
+        
+        final_df['final capital'] = final_df['final capital (unscaled)'] * final_df['quality_weight']
+        final_df['return'] = (((final_df['final capital'] - final_df['starting capital']) / final_df['starting capital']) )
+        st.dataframe(final_df)
+        
     else:
         st.warning("No results found—check that your strategy’s `run()` populates `portfolio_capital`.")

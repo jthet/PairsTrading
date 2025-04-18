@@ -50,6 +50,7 @@ class XGBoostStrategy(BaseBacktest):
         self.portfolio_test_returns = []
     
     def run(self):
+        quality_weights = self.pairs_df["Scaled_Quality"].values
         for idx, row in self.pairs_df.iterrows():
             ticker1, ticker2 = row['Asset1'], row['Asset2']
             quality_weight = row["Scaled_Quality"]
@@ -136,7 +137,9 @@ class XGBoostStrategy(BaseBacktest):
             portfolio_returns = pd.concat(self.portfolio_test_returns, axis=1).sum(axis=1)
             self.portfolio_capital = (1 + portfolio_returns).cumprod()
             self.portfolio_returns = portfolio_returns
-
+            self.pair_results[f'{ticker1}_{ticker2}'] = pair_df
+            self.quality_weight = quality_weights
+            
             print("\nXGBoost Strategy Performance Metrics:")
             print(f"Final Return: {self.portfolio_capital.iloc[-1] - 1:.2%}")
             sharpe = (portfolio_returns.mean() / portfolio_returns.std() * np.sqrt(252)

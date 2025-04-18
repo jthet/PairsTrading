@@ -2,7 +2,7 @@
 
 STAT 686: Market Models final project
 
-Jackson Thetford, Ryker Dolese, Krish Kumar, Katharine Britt, Naomi Consiglio Mehrdad Tamiji
+Jackson Thetford, Ryker Dolese, Krish Kumar, Katharine Britt, Naomi Consiglio, Mehrdad Tamiji
 
 ## Usage
 

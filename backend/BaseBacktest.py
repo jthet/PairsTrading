@@ -31,7 +31,7 @@ class BaseBacktest:
         
         # Use quality scores for weighting if provided... 
         if "Quality_Score" in self.pairs_df.columns:
-            self.pairs_df["Scaled_Quality"] = self.pairs_df["Quality_Score"] / self.pairs_df["Quality_Score"].sum()
+            self.pairs_df["Scaled_Quality"] = self.pairs_df["Quality_Score"].clip(lower=0.05, upper=0.95) / self.pairs_df["Quality_Score"].clip(lower=0.05, upper=0.95).sum()
         else:
             self.pairs_df["Scaled_Quality"] = 1.0 / len(self.pairs_df)
     
