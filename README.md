@@ -1,6 +1,6 @@
 # Systematic Pairs Trading
 
-STAT 686: Market Models final project
+STAT 686: Market Models Final Project
 
 Jackson Thetford, Ryker Dolese, Krish Kumar, Katharine Britt, Naomi Consiglio, Mehrdad Tamiji
 
